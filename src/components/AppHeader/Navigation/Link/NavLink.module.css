@@ -1,0 +1,13 @@
+.nav {
+  display: flex;
+  gap: 4px;
+}
+
+.link {
+  text-decoration: none;
+  color: black;
+}
+
+.isActive {
+  color: rgba(131, 41, 8, 0.911);
+}

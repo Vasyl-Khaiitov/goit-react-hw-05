@@ -1,22 +1,10 @@
-import { NavLink } from 'react-router-dom';
 import css from './AppHeader.module.css';
-import clsx from 'clsx';
-
-const getActiveLinkClass = ({ isActive }) => {
-  return clsx(css.link, isActive && css.isActive);
-};
+import Navigation from './Navigation/Navigation';
 
 export default function AppHeader() {
   return (
     <header className={css.header}>
-      <nav className={css.nav}>
-        <NavLink to="/" className={getActiveLinkClass}>
-          Home
-        </NavLink>
-        <NavLink to="/movies" className={getActiveLinkClass}>
-          Movies
-        </NavLink>
-      </nav>
+      <Navigation />
     </header>
   );
 }

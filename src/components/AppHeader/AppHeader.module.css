@@ -7,17 +7,3 @@
   border-bottom: 1px solid #2a2a2a;
   margin-bottom: 20px;
 }
-
-.nav {
-  display: flex;
-  gap: 4px;
-}
-
-.link {
-  text-decoration: none;
-  color: black;
-}
-
-.isActive {
-  color: rgba(131, 41, 8, 0.911);
-}
