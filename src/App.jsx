@@ -2,8 +2,8 @@ import { Routes, Route } from 'react-router-dom';
 import AppHeader from './components/AppHeader/AppHeader';
 import Home from './pages/HomePage/HomePage';
 import Movies from './pages/MoviesPage/MoviesPage';
-import MovieDetails from './pages/MovieDetailsPage/MovieDetailsPage';
 import NotFound from './pages/NotFoundPage/NotFoundPage';
+import MovieDetails from './pages/MovieDetailsPage/MovieDetailsPage';
 
 export default function App() {
   return (

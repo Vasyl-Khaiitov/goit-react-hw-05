@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { searchMovies } from '../../serwice/TmdbApi';
+import { getSearchMovies } from '../../service/TmdbApi';
 import MovieList from '../../components/MovieList/MovieList';
 import SearchMovies from '../../components/SearchMovies/SearchMovies';
 
@@ -30,7 +30,7 @@ export default function Movies() {
       setLoading(true);
 
       try {
-        const data = await searchMovies(query);
+        const data = await getSearchMovies(query);
         setMovies(data);
         console.log(data);
       } catch (error) {
@@ -48,8 +48,8 @@ export default function Movies() {
   return (
     <div>
       <SearchMovies onSubmit={changeSearchQuery} />
-      {error && <p>❌ Помилка: {error}</p>}
-      {loading && isSearching && <p>🔄 Завантаження...</p>}
+      {error && <p>❌ Error:: {error}</p>}
+      {loading && isSearching && <p>🔄 Loading...</p>}
       <MovieList items={movies} />
       {isMoviesEmpty && <strong>No results</strong>}
     </div>

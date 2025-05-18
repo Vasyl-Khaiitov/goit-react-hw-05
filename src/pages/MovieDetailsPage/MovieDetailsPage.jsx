@@ -1,31 +1,39 @@
-// import MoviesDetails from '../../components/MovieDetails/MovieDetails';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import MoviesDetails from '../../components/MovieDetails/MovieDetails';
+import { getMovieDetails } from '../../service/TmdbApi';
 
 export default function MovieDetails() {
-  // const { movieId } = useParams();
-  //  useEffect(() => {
-  //    async function fetchDataId() {
-  //      if (!movieId) return;
+  const { movieId } = useParams();
+  const [movieDetails, setMovieDetails] = useState(null);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  //      setError(false);
-  //      setLoading(true);
+  useEffect(() => {
+    async function fetchDataDetails() {
+      if (!movieId) return;
 
-  //      try {
-  //        const dataDetails = await fetchMovieDetails(movieId);
-  //        setMovieDetails(dataDetails); // ✅ Зберігаємо отримані дані
-  //      } catch (error) {
-  //        setError(error.message || 'Не вдалося отримати деталі фільму.');
-  //      } finally {
-  //        setLoading(false);
-  //      }
-  //    }
+      setLoading(true);
 
-  //    fetchDataId();
-  //  }, [movieId]);
+      try {
+        const dataDetails = await getMovieDetails(movieId);
+        console.log(dataDetails);
 
+        setMovieDetails(dataDetails);
+      } catch (error) {
+        setError(error.message || 'Could not get movie details.');
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchDataDetails();
+  }, [movieId]);
   return (
     <div>
-      {/* <MoviesDetails /> */}
-      <h2>Hello details</h2>
+      {error && <p>❌Error: {error}</p>}
+      {loading && <p>🔄 Loading...</p>}
+      {!loading && movieDetails ? <MoviesDetails movie={movieDetails} /> : null}
     </div>
   );
 }

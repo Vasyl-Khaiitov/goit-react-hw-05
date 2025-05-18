@@ -1,14 +1,20 @@
-// export default function MovieReviews() {
-//   return (
-//     <div>
-//       <h3>📝 Reviews:</h3>
-//       <ul>
-//         {selectedMovie.reviews.results.map((review) => (
-//           <li key={review.id}>
-//             <strong>{review.author}</strong>: {review.content}
-//           </li>
-//         ))}
-//       </ul>
-//     </div>
-//   );
-// }
+export function MovieReviews({ movie }) {
+  return (
+    <div>
+      <strong>Reviews:</strong>
+      {movie.reviews.length > 0 ? (
+        <ul>
+          {movie.reviews.map((review, index) => (
+            <li key={`${review.id}-${index}`}>
+              <p>
+                <strong>{review.author}:</strong> {review.content}
+              </p>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No reviews</p>
+      )}
+    </div>
+  );
+}

@@ -1,8 +1,6 @@
 import { Link } from 'react-router-dom';
 
 export default function MovieList({ items }) {
-  console.log(`Завантажено ${items.length} фільмів.`);
-
   return (
     <div>
       <ul>

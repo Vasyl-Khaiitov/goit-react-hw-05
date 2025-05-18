@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { fetchTrendingMovies } from '../../serwice/TmdbApi';
+import { getTrendingMovies } from '../../service/TmdbApi';
 import MovieList from '../../components/MovieList/MovieList';
 
 export default function Home() {
@@ -10,10 +10,10 @@ export default function Home() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    async function fetchDataTrendingMovies() {
+    async function fetchTrendingMovies() {
       setLoading(true);
       try {
-        const response = await fetchTrendingMovies(currentPage); // ✅ Передаємо `currentPage`
+        const response = await getTrendingMovies(currentPage);
 
         setMovies((prevMovies) => [...prevMovies, ...response.results]);
         setTotalPages(response.total_pages);
@@ -24,7 +24,7 @@ export default function Home() {
       }
     }
 
-    fetchDataTrendingMovies();
+    fetchTrendingMovies();
   }, [currentPage]);
 
   const handleLoadMore = () => {
