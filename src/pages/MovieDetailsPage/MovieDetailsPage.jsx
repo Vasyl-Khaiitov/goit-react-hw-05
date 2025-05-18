@@ -1,9 +1,10 @@
-import MoviesDetails from '../../components/MovieDetailsPage/MovieDetailsPage';
+// import MoviesDetails from '../../components/MovieDetails/MovieDetails';
 
 export default function MovieDetails() {
   return (
     <div>
-      <MoviesDetails />
+      {/* <MoviesDetails /> */}
+      <h2>Hello details</h2>
     </div>
   );
 }

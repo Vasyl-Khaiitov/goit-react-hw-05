@@ -11,11 +11,12 @@ const apiClient = axios.create({
 });
 
 // 🔥 1. Отримати список трендових фільмів
-export async function fetchTrendingMovies() {
+export async function fetchTrendingMovies(page) {
   try {
     const response = await apiClient.get('/trending/movie/day', {
-      //   params: { page },
+      params: { page },
     });
+    console.log(response.data);
 
     return response.data; // Повертаємо лише масив фільмів
   } catch (error) {

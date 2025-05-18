@@ -5,33 +5,48 @@ import MovieList from '../../components/MovieList/MovieList';
 export default function Home() {
   const [movies, setMovies] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPage, setTotalPage] = useState(null);
+  const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    async function fetchDataTredingMovies() {
+    async function fetchDataTrendingMovies() {
+      setLoading(true);
       try {
-        const response = await fetchTrendingMovies(currentPage);
+        const response = await fetchTrendingMovies(currentPage); // ✅ Передаємо `currentPage`
+
         setMovies((prevMovies) => [...prevMovies, ...response.results]);
+        setTotalPages(response.total_pages);
       } catch (error) {
-        console.log(' error', error);
+        setError(error.message);
+      } finally {
+        setLoading(false);
       }
     }
-    fetchDataTredingMovies();
+
+    fetchDataTrendingMovies();
   }, [currentPage]);
 
-  const handleClick = () => {
-    setCurrentPage(currentPage + 1);
+  const handleLoadMore = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage((prevPage) => prevPage + 1); // ✅ Збільшуємо `currentPage`
+    }
   };
 
   return (
     <div>
       <h1>Trending Movies</h1>
 
-      <MovieList items={movies} currentPage={currentPage} />
+      {error && <p>❌ Помилка: {error}</p>}
+      {loading && <p>🔄 Завантаження...</p>}
 
-      <button type="buttom" onClick={handleClick}>
-        Load more
-      </button>
+      <MovieList items={movies} />
+
+      {currentPage < totalPages && (
+        <button type="button" onClick={handleLoadMore}>
+          Load more
+        </button>
+      )}
     </div>
   );
 }
