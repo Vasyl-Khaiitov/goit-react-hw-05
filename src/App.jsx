@@ -11,11 +11,11 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/movies" element={<Movies />} />
-        {/* <Route path="/movies/:movieId" element={<MovieDetailsPage />}>
-          <Route path="cast" element={<MovieCast />} />
-          <Route path="reviews" element={<MovieReviews />} />
+        <Route path="/movies/:movieId" element={<MovieDetailsPage />}>
+          {/* <Route path="cast" element={<MovieCast />} />
+          <Route path="reviews" element={<MovieReviews />} /> */}
         </Route>
-        <Route path="*" element={<NotFound />} /> */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   );
