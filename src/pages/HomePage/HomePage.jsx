@@ -5,7 +5,7 @@ import MovieList from '../../components/MovieList/MovieList';
 export default function Home() {
   const [movies, setMovies] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -36,14 +36,13 @@ export default function Home() {
   return (
     <div>
       <h1>Trending Movies</h1>
-
       {error && <p>❌ Помилка: {error}</p>}
       {loading && <p>🔄 Завантаження...</p>}
-
-      <MovieList items={movies} />
+      {movies.length > 0 && <MovieList items={movies} />}
+      {loading && currentPage > 1 && <p>🔄 Завантаження...</p>}
 
       {currentPage < totalPages && (
-        <button type="button" onClick={handleLoadMore}>
+        <button type="button" onClick={handleLoadMore} disabled={loading}>
           Load more
         </button>
       )}

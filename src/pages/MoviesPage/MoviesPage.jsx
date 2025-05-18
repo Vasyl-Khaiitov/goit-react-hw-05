@@ -1,99 +1,56 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+import { searchMovies } from '../../serwice/TmdbApi';
 import MovieList from '../../components/MovieList/MovieList';
 import SearchMovies from '../../components/SearchMovies/SearchMovies';
-import { fetchMovieDetails, searchMovies } from '../../serwice/TmdbApi';
-import { useDebounce } from 'use-debounce';
 
 export default function Movies() {
   const [movies, setMovies] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [movieDetails, setMovieDetails] = useState(null); // Додаємо новий стейт
+  const [isSearching, setIsSearching] = useState(false);
 
-  const [debouncedQuery] = useDebounce(searchQuery, 500);
+  const query = searchParams.get('query') ?? '';
+
+  const changeSearchQuery = (searchValue) => {
+    const newQuery = searchValue.trim();
+    setIsSearching(true);
+    setSearchParams({ query: newQuery });
+  };
 
   useEffect(() => {
     async function fetchDataMovies() {
-      if (!debouncedQuery) return;
+      if (!query) {
+        setMovies([]);
+        return;
+      }
 
       setError(false);
       setLoading(true);
 
       try {
-        const data = await searchMovies(debouncedQuery, currentPage);
-
-        setMovies((prevMoviesData) => [...prevMoviesData, ...data]);
+        const data = await searchMovies(query);
+        setMovies(data);
+        console.log(data);
       } catch (error) {
-        setError(error.message || 'Не вдалося завантажити дані.');
+        setError(error.message || 'Failed to load data.');
       } finally {
         setLoading(false);
       }
     }
 
     fetchDataMovies();
-  }, [debouncedQuery, currentPage]);
+  }, [query]);
 
-  const { movieId } = useParams();
-
-  useEffect(() => {
-    async function fetchDataId() {
-      if (!movieId) return;
-
-      setError(false);
-      setLoading(true);
-
-      try {
-        const dataDetails = await fetchMovieDetails(movieId);
-        setMovieDetails(dataDetails); // ✅ Зберігаємо отримані дані
-      } catch (error) {
-        setError(error.message || 'Не вдалося отримати деталі фільму.');
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchDataId();
-  }, [movieId]);
-
-  useEffect(() => {
-    const queryFromParams = searchParams.get('query') ?? '';
-    setSearchQuery(queryFromParams);
-
-    if (queryFromParams) {
-      setMovies([]); // Очищуємо попередній список
-      setCurrentPage(1);
-    }
-  }, [searchParams]);
-
-  useEffect(() => {
-    if (!searchQuery) return;
-
-    setSearchParams({ query: searchQuery }); // Оновлюємо URL, якщо є значення
-  }, [searchQuery]);
-
-  function handleSearch(query) {
-    setMovies([]);
-    setSearchQuery(query);
-    setCurrentPage(1);
-    if (query) {
-      setSearchParams({ query });
-    } else {
-      setSearchParams({});
-    }
-  }
-
-  const isMoviesEmpty = movies.length === 0;
+  const isMoviesEmpty = movies.length === 0 && isSearching && !loading;
 
   return (
     <div>
-      <SearchMovies onSubmit={handleSearch} />
+      <SearchMovies onSubmit={changeSearchQuery} />
       {error && <p>❌ Помилка: {error}</p>}
-      {loading && <p>🔄 Завантаження...</p>}
-      <MovieList movies={movies} />
+      {loading && isSearching && <p>🔄 Завантаження...</p>}
+      <MovieList items={movies} />
       {isMoviesEmpty && <strong>No results</strong>}
     </div>
   );
