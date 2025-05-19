@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import { useParams, useLocation, Outlet, NavLink } from 'react-router-dom';
 import css from './MovieDetailsPage.module.css';
 import MovieDetails from '../../components/MovieDetails/MovieDetails';
-import { getMovieDetails } from '@service/TmdbApi';
+import { getMovieDetails } from '../../service/TmdbApi';
 import clsx from 'clsx';
 
 export default function MovieDetailsPage() {
