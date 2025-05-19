@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getMovieDirectors } from '../../service/TmdbApi';
+import { getMovieDirectors } from '../../../service/TMDbApi';
 
 export default function MovieDirectors() {
   const { movieId } = useParams();
