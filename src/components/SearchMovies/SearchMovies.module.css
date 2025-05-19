@@ -1,0 +1,19 @@
+.search_input {
+  width: 180px;
+  height: 28px;
+  margin-right: 5px;
+  border-radius: 5px;
+}
+
+.search_btn {
+  width: 70px;
+  height: 33px;
+  border-radius: 5px;
+  border: none;
+  background-color: rgba(201, 141, 141, 0.998);
+  color: white;
+}
+
+.search_btn:hover {
+  background-color: rgba(212, 75, 75, 0.998);
+}

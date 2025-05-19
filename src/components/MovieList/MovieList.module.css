@@ -1,0 +1,17 @@
+.list_item_list {
+  max-width: 350px;
+}
+
+.link {
+  text-decoration: none;
+  color: black;
+}
+
+.link:hover {
+  text-decoration: underline;
+  color: rgba(255, 68, 0, 0.653);
+}
+.title {
+  font-size: x-large;
+  font-weight: 700;
+}

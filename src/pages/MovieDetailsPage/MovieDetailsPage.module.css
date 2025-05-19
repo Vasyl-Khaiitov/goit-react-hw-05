@@ -1,0 +1,17 @@
+.nav_list_details_page {
+  display: flex;
+  gap: 4px;
+}
+
+.link {
+  text-decoration: none;
+  color: black;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.active {
+  color: orangered;
+}

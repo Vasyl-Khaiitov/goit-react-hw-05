@@ -35,12 +35,12 @@ export async function getSearchMovies(query) {
     throw error;
   }
 }
+const defaultImg =
+  'https://dl-media.viber.com/10/share/2/long/vibes/icon/image/0x0/95e0/5688fdffb84ff8bed4240bcf3ec5ac81ce591d9fa9558a3a968c630eaba195e0.jpg'; // ✅ Дефолтне фото
+
 export async function getMovieDetails(movieId) {
   try {
-    const response = await apiClient.get(`/movie/${movieId}`, {
-      params: { append_to_response: 'videos,reviews,credits' },
-    });
-
+    const response = await apiClient.get(`/movie/${movieId}`);
     const movieData = response.data;
 
     return {
@@ -49,25 +49,60 @@ export async function getMovieDetails(movieId) {
       overview: movieData.overview,
       releaseDate: movieData.release_date,
       rating: movieData.vote_average,
-      poster: `https://image.tmdb.org/t/p/w500${movieData.poster_path}`, // ✅ Додаємо постер фільму
+      poster: movieData.poster_path
+        ? `https://image.tmdb.org/t/p/w500${movieData.poster_path}`
+        : defaultImg,
       genres: movieData.genres.map((genre) => genre.name),
-      videos: movieData.videos?.results || [],
-      reviews: movieData.reviews?.results || [],
-      credits: {
-        cast:
-          movieData.credits?.cast.map((actor) => ({
-            id: actor.id,
-            name: actor.name,
-            character: actor.character,
-            profile: actor.profile_path
-              ? `https://image.tmdb.org/t/p/w300${actor.profile_path}`
-              : null,
-          })) || [],
-        crew: movieData.credits?.crew || [],
-      },
     };
   } catch (error) {
     console.error(`Error retrieving movie ID details ${movieId}:`, error);
     return null;
+  }
+}
+
+export async function getMovieVideos(movieId) {
+  try {
+    const response = await apiClient.get(`/movie/${movieId}/videos`);
+    return response.data.results || [];
+  } catch (error) {
+    console.error(`Error fetching movie videos:`, error);
+    return [];
+  }
+}
+
+export async function getMovieCast(movieId) {
+  try {
+    const response = await apiClient.get(`/movie/${movieId}/credits`);
+    return response.data.cast.map((actor) => ({
+      id: actor.id,
+      name: actor.name,
+      character: actor.character,
+      profile: actor.profile_path
+        ? `https://image.tmdb.org/t/p/w300${actor.profile_path}`
+        : null,
+    }));
+  } catch (error) {
+    console.error(`Error fetching movie cast:`, error);
+    return [];
+  }
+}
+
+export async function getMovieDirectors(movieId) {
+  try {
+    const response = await apiClient.get(`/movie/${movieId}/credits`);
+    return response.data.crew.filter((member) => member.job === 'Director');
+  } catch (error) {
+    console.error(`Error fetching movie directors:`, error);
+    return [];
+  }
+}
+
+export async function getMovieReviews(movieId) {
+  try {
+    const response = await apiClient.get(`/movie/${movieId}/reviews`);
+    return response.data.results || [];
+  } catch (error) {
+    console.error(`Error fetching movie reviews:`, error);
+    return [];
   }
 }

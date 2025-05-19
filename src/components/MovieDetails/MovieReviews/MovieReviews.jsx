@@ -1,10 +1,28 @@
-export function MovieReviews({ movie }) {
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { getMovieReviews } from '../../../service/TmdbApi';
+
+export default function MovieReviews() {
+  const { movieId } = useParams();
+  const [reviews, setReviews] = useState([]);
+
+  useEffect(() => {
+    if (!movieId) return;
+
+    async function fetchReviews() {
+      const data = await getMovieReviews(movieId);
+      setReviews(data);
+    }
+
+    fetchReviews();
+  }, [movieId]);
+
   return (
     <div>
       <strong>Reviews:</strong>
-      {movie.reviews.length > 0 ? (
+      {reviews.length > 0 ? (
         <ul>
-          {movie.reviews.map((review, index) => (
+          {reviews.map((review, index) => (
             <li key={`${review.id}-${index}`}>
               <p>
                 <strong>{review.author}:</strong> {review.content}
@@ -13,7 +31,7 @@ export function MovieReviews({ movie }) {
           ))}
         </ul>
       ) : (
-        <p>No reviews</p>
+        <p>No reviews available.</p>
       )}
     </div>
   );

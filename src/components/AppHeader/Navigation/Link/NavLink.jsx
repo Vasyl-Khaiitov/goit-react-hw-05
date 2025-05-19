@@ -11,10 +11,10 @@ export default function Link() {
     <div>
       <nav className={css.nav}>
         <NavLink to="/" className={getActiveLinkClass}>
-          Home
+          <h2>Home</h2>
         </NavLink>
         <NavLink to="/movies" className={getActiveLinkClass}>
-          Movies
+          <h2> Movies </h2>
         </NavLink>
       </nav>
     </div>
