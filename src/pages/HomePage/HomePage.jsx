@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getTrendingMovies } from '../../service/TmdbApi';
+import { getTrendingMovies } from '@service/TmdbApi';
 import MovieList from '../../components/MovieList/MovieList';
 
 export default function Home() {
