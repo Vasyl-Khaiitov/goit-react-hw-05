@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getMovieCast } from '../../../service/TmdbApi';
+import { getMovieCast } from '../../service/TmdbApi';
 import css from './MovieCast.module.css';
 
 const defaultImg =

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getMovieVideos } from '../../../service/TmdbApi';
+import { getMovieVideos } from '../../service/TmdbApi';
 import css from './MovieTrailer.module.css';
 
 export default function MovieTrailer() {
