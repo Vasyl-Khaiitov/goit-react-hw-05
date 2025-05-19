@@ -87,15 +87,15 @@ export async function getMovieCast(movieId) {
   }
 }
 
-// export async function getMovieDirectors(movieId) {
-//   try {
-//     const response = await apiClient.get(`/movie/${movieId}/credits`);
-//     return response.data.crew.filter((member) => member.job === 'Director');
-//   } catch (error) {
-//     console.error(`Error fetching movie directors:`, error);
-//     return [];
-//   }
-// }
+export async function getMovieDirectors(movieId) {
+  try {
+    const response = await apiClient.get(`/movie/${movieId}/credits`);
+    return response.data.crew.filter((member) => member.job === 'Director');
+  } catch (error) {
+    console.error(`Error fetching movie directors:`, error);
+    return [];
+  }
+}
 
 export async function getMovieReviews(movieId) {
   try {
