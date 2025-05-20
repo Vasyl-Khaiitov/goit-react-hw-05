@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { getTrendingMovies } from '../../service/TmdbApi';
 import MovieList from '../../components/MovieList/MovieList';
+import { getTrendingMovies } from '../../service/TmdbApi';
 
 export default function Home() {
   const [movies, setMovies] = useState([]);
@@ -29,7 +29,7 @@ export default function Home() {
 
   const handleLoadMore = () => {
     if (currentPage < totalPages) {
-      setCurrentPage((prevPage) => prevPage + 1); // ✅ Збільшуємо `currentPage`
+      setCurrentPage((prevPage) => prevPage + 1);
     }
   };
 
