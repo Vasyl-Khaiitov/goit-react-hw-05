@@ -10,10 +10,8 @@ const MovieDetails = lazy(() =>
 );
 const NotFound = lazy(() => import('../../pages/NotFoundPage/NotFoundPage'));
 
-const MovieCast = lazy(() => import('../MovieDetails/MovieCast/MovieCast'));
-const MovieReviews = lazy(() =>
-  import('../MovieDetails/MovieReviews/MovieReviews'),
-);
+const MovieCast = lazy(() => import('../MovieCast/MovieCast'));
+const MovieReviews = lazy(() => import('../MovieReviews/MovieReviews'));
 const MovieTrailer = lazy(() =>
   import('../MovieDetails/MovieTrailer/MovieTrailer'),
 );
